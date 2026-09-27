@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block title %}Try again{% endblock %}
+{% block content %}
+<section class="error-panel"><h1>Please try again</h1><p>{{ message }}</p><a href="{{ url_for('index') }}">Return to Postmark</a></section>
+{% endblock %}

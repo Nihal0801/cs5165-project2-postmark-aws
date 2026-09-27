@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}My Postbox{% endblock %}
+{% block content %}
+<div class="intro postbox-intro">
+  <h1>My Postbox</h1>
+  <p class="record-number">POSTMARK {{ record_number }}</p>
+</div>
+<div class="postbox-grid">
+  <section class="details-panel" aria-labelledby="details-heading">
+    <h2 id="details-heading">My details</h2>
+    <dl class="contact-details">
+      <div><dt>First name</dt><dd>{{ user.first_name }}</dd></div>
+      <div><dt>Last name</dt><dd>{{ user.last_name }}</dd></div>
+      <div><dt>Email</dt><dd>{{ user.email }}</dd></div>
+      <div><dt>Address</dt><dd class="address">{{ user.address }}</dd></div>
+      <div><dt>Username</dt><dd>{{ user.username }}</dd></div>
+    </dl>
+  </section>
+  <section class="mail-card" aria-labelledby="mail-heading">
+    <div class="mail-card-header">
+      <h2 id="mail-heading">Saved mail</h2>
+      <span class="saved-status">Saved</span>
+    </div>
+    <p class="file-name">{{ user.file_name }}</p>
+    <dl class="file-stats">
+      <div><dt>Words</dt><dd class="word-count">{{ user.word_count }}</dd></div>
+      <div><dt>File size</dt><dd>{{ user.file_size }} bytes</dd></div>
+      <div class="saved-date"><dt>Saved</dt><dd><time datetime="{{ saved_at.isoformat() }}">{{ saved_at.strftime('%b %d, %Y at %I:%M %p UTC') }}</time></dd></div>
+    </dl>
+    <a class="button" href="{{ url_for('download_file') }}">Download original</a>
+    <details class="text-preview">
+      <summary>Read text</summary>
+      <pre>{{ preview }}</pre>
+    </details>
+    <div class="mail-card-footer"><span>{{ record_number }}</span><span>Personal postbox</span></div>
+  </section>
+</div>
+{% endblock %}

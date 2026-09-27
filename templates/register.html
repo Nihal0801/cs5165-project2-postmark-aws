@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Create your postbox{% endblock %}
+{% block page_class %}registration-page{% endblock %}
+{% block content %}
+<div class="intro">
+  <p class="tagline">A personal literary postbox.</p>
+  <h1>Create your postbox</h1>
+  <p>Save your details and a text file so you can come back to it later.</p>
+</div>
+<form class="form-sheet" method="post" action="{{ url_for('register') }}" enctype="multipart/form-data">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <fieldset>
+    <legend><span class="section-number" aria-hidden="true">01</span> Account</legend>
+    <div class="field-grid">
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" name="username" value="{{ values.get('username', '') }}" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_.\-]{3,30}" autocomplete="username" aria-describedby="username-help">
+        <small id="username-help">3–30 letters, numbers, dots, dashes, or underscores.</small>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required minlength="8" maxlength="128" autocomplete="new-password" aria-describedby="password-help">
+        <small id="password-help">At least 8 characters.</small>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend><span class="section-number" aria-hidden="true">02</span> Your details</legend>
+    <div class="field-grid">
+      <div class="field">
+        <label for="first-name">First name</label>
+        <input id="first-name" name="first_name" value="{{ values.get('first_name', '') }}" required maxlength="80" autocomplete="given-name">
+      </div>
+      <div class="field">
+        <label for="last-name">Last name</label>
+        <input id="last-name" name="last_name" value="{{ values.get('last_name', '') }}" required maxlength="80" autocomplete="family-name">
+      </div>
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" value="{{ values.get('email', '') }}" required maxlength="254" autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="address">Address</label>
+      <textarea id="address" name="address" rows="2" required maxlength="300" autocomplete="street-address">{{ values.get('address', '') }}</textarea>
+    </div>
+  </fieldset>
+  <fieldset class="mail-section">
+    <legend><span class="section-number" aria-hidden="true">03</span> First piece of mail</legend>
+    <div class="field upload-field">
+      <label for="document">Upload a text file</label>
+      <input id="document" name="document" type="file" accept=".txt,text/plain" required aria-describedby="file-help">
+      <small id="file-help">.txt files only · UTF-8 · Up to 1 MB</small>
+    </div>
+  </fieldset>
+  <div class="form-actions">
+    <p class="form-note">All fields are required.</p>
+    <button type="submit">Create postbox</button>
+  </div>
+</form>
+<p class="form-switch">Already registered? <a href="{{ url_for('login') }}">Log in</a></p>
+{% endblock %}

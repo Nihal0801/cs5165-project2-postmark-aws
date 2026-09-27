@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Open your postbox{% endblock %}
+{% block page_class %}login-page{% endblock %}
+{% block content %}
+<div class="intro">
+  <h1>Open your postbox</h1>
+  <p>Log in to view your saved details and file.</p>
+</div>
+<form class="form-sheet login-form" method="post" action="{{ url_for('login') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <div class="field">
+    <label for="username">Username</label>
+    <input id="username" name="username" required maxlength="30" autocomplete="username" value="{{ request.form.get('username', '') }}">
+  </div>
+  <div class="field">
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" required maxlength="128" autocomplete="current-password">
+  </div>
+  <button type="submit">Log in</button>
+</form>
+<p class="form-switch">Need a postbox? <a href="{{ url_for('register') }}">Register</a></p>
+{% endblock %}

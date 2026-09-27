@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Postmark{% endblock %} · Postmark</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('index') }}" aria-label="Postmark home">POSTMARK</a>
+    <nav aria-label="Main navigation">
+      {% if session.get('user_id') %}
+      <form method="post" action="{{ url_for('logout') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button class="text-button" type="submit">Log out</button>
+      </form>
+      {% else %}
+      <a href="{{ url_for('register') }}" {% if request.endpoint == 'register' %}aria-current="page"{% endif %}>Register</a>
+      <a href="{{ url_for('login') }}" {% if request.endpoint == 'login' %}aria-current="page"{% endif %}>Log in</a>
+      {% endif %}
+    </nav>
+  </header>
+  <main id="main" tabindex="-1" class="{% block page_class %}{% endblock %}">
+    {% for message in get_flashed_messages() %}
+    <div class="notice" role="status">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <span>Nihal Patel</span>
+    <span>Cloud Computing · Project 2</span>
+  </footer>
+</body>
+</html>
